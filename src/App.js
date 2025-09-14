@@ -12,7 +12,11 @@ function App() {
   }
 
   const onAddTodoClick = () => {
-    setTodoList([...todoList, { id: uuid(), todo: todo, isCompleted: false}]);
+
+    if(!todo || todo.trim() === '') {
+      return;
+    }
+    setTodoList([...todoList, { id: uuid(), todo: todo, isCompleted: false }]);
     setTodo('');
   }
 
@@ -22,29 +26,30 @@ function App() {
   }
 
   const onTodoCheckChange = (id) => {
-    const updatedTodoList = todoList.map(todo => todo.id === id ? {...todo, isCompleted: !todo.isCompleted} : todo)
+    const updatedTodoList = todoList.map(todo => todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo)
     setTodoList(updatedTodoList)
     console.log(updatedTodoList)
   }
 
   return (
-    <div className="App">
-
-      <h1>My Wishlist</h1>
-      <div>
-
-        <input value={todo} onChange={onTodoInputChange} placeholder='Add your wishlist here...' />
-        <button onClick={onAddTodoClick}>Add</button>
+    <div className="App background">
+      <div className='content'>
+        <input className='input' value={todo} onChange={onTodoInputChange} placeholder='Enter your To-Do' />
+        <button className='add-button' onClick={onAddTodoClick}>Add</button>
       </div>
-      <div>
+      <div className='outside-div'>
         {
           todoList?.length > 0 && todoList.map(todo => (
-            <div key={todo.id}> 
-              <label>
-                <input onChange={() => onTodoCheckChange(todo.id)}  type='checkbox' />
-                <span className={todo.isCompleted ? 'strike-through' : ''}>{todo.todo} </span>
-              </label>
-              <button onClick={() => onDeleteClick(todo.id)}>Delete</button>
+            <div className='todo-list' key={todo.id}>
+              <div className='left'>
+                <label>
+                  <input className='checkbox' onChange={() => onTodoCheckChange(todo.id)} type='checkbox' />
+                  <span className={todo.isCompleted ? 'strike-through' : ''}>{todo.todo} </span>
+                </label>
+              </div>
+                <div className='right'>
+                <button className='delete-button' onClick={() => onDeleteClick(todo.id)}>Delete</button>
+                </div>
             </div>
           ))
         }
