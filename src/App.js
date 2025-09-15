@@ -10,6 +10,12 @@ function App() {
   const onTodoInputChange = (e) => {
     setTodo(e.target.value)
   }
+  const handleKeyDown = (e) => {
+    if(e.key === 'Enter') {
+      onAddTodoClick();
+    }
+  }
+
 
   const onAddTodoClick = () => {
 
@@ -34,7 +40,7 @@ function App() {
   return (
     <div className="App background">
       <div className='content'>
-        <input className='input' value={todo} onChange={onTodoInputChange} placeholder='Enter your To-Do' />
+        <input className='input' value={todo} onChange={onTodoInputChange} onKeyDown={handleKeyDown} placeholder='Enter your To-Do' />
         <button className='add-button' onClick={onAddTodoClick}>Add</button>
       </div>
       <div className='outside-div'>
@@ -42,7 +48,7 @@ function App() {
           todoList?.length > 0 && todoList.map(todo => (
             <div className='todo-list' key={todo.id}>
               <div className='left'>
-                <label>
+                <label className='label'>
                   <input className='checkbox' onChange={() => onTodoCheckChange(todo.id)} type='checkbox' />
                   <span className={todo.isCompleted ? 'strike-through' : ''}>{todo.todo} </span>
                 </label>
