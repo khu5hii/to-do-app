@@ -2,7 +2,7 @@
   text-align: center;
   position: relative;
   height: 100vh;
-  overflow: hidden;
+  /* overflow: hidden; */
   /* display: flex;
   flex-direction: column;
   justify-content: flex-start; */
@@ -11,6 +11,7 @@
 body {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+
 .strike-through {
   text-decoration: line-through;
 }
@@ -34,13 +35,14 @@ body {
   padding: 7px 10px;
   font-weight: 200;
   font-size: 15px;
+  max-width: 100%;
   width: 300px;
-  
+  box-sizing: border-box;
 }
 
 .add-button {
   border: solid black 2px;
-  
+
   border-radius: 10px;
   padding: 7px 20px;
   background: none;
@@ -49,13 +51,18 @@ body {
 }
 
 .delete-button {
-  border: solid black 2px;
-  
+  border: solid rgb(0, 0, 0) 2px;
   border-radius: 10px;
   padding: 7px 11px;
   background: none;
   font-weight: 200;
   font-size: 15px;
+}
+
+.add-button:hover, .delete-button:hover {
+  background-color: black;
+  color: white;
+  transition: 0.1s ease-in;
 }
 
 .content {
@@ -68,19 +75,20 @@ body {
   flex-direction: row;
   margin-top: 6%;
   margin-bottom: 1%;
+  padding: 0px 20px;
 }
 
 .todo-list {
   /* display: flex;
   justify-content: space-between;
   align-items: center; */
-  max-width: 400px;
+  max-width: 380px;
   width: 100%;
   padding: 5px 10px;
-  
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   display: flex;
   justify-content: space-between;
+  gap: 10px;
 }
 
 .outside-div {
@@ -89,6 +97,7 @@ body {
   gap: 10px; */
   flex-direction: column;
   align-items: center;
+  padding: 0px 20px;
 }
 
 .left {
@@ -98,14 +107,76 @@ body {
   align-items: center;
   gap: 8px;
   padding: 5px 10px;
-  width: 300px;
+  max-width: 300px;
+  width: 100%;
 }
 
 .left span {
   font-size: 18px;
+  word-break: break-word;
+  white-space: normal;
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+
+.label {
+  display: flex;
 }
 
 .checkbox {
-  vertical-align: text-top;
+  vertical-align: bottom;
   accent-color: black;
+  margin-right: 6px;
+}
+
+/* Default */
+.left {
+  width: 300px;
+}
+
+/* Default (desktop & large screens) */
+.left {
+  width: 300px;
+}
+
+/* For tablets & small screens */
+@media (max-width: 440px) {
+  .left {
+    width: 100%;
+    /* Let it stretch inside container */
+  }
+
+  .todo-list {
+    font-size: 0.9em;
+  }
+
+  .content {
+    flex-direction: column;
+    /* stack input & button */
+    gap: 10px;
+    font-size: 0.9em;
+  }
+
+  .input {
+    width: 100%;
+    /* full width input */
+    margin: 5px 0;
+    max-width: none;
+  }
+
+  .add-button {
+    width: 100%;
+    /* button also full width */
+  }
+}
+
+/* For very small phones */
+@media (max-width: 400px) {
+  .todo-list {
+    font-size: 0.8em;
+  }
+
+  .content {
+    font-size: 0.8em;
+  }
 }
