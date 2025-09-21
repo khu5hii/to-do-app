@@ -1,11 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import { v4 as uuid } from 'uuid';
 
 function App() {
 
   const [todo, setTodo] = useState();
-  const [todoList, setTodoList] = useState([]);
+  const [todoList, setTodoList] = useState(() => {
+    const savedTodos = localStorage.getItem('todoList');
+    return savedTodos ? JSON.parse(savedTodos) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('todoList', JSON.stringify(todoList));
+  }, [todoList]);
 
   const onTodoInputChange = (e) => {
     setTodo(e.target.value)
@@ -34,7 +41,6 @@ function App() {
   const onTodoCheckChange = (id) => {
     const updatedTodoList = todoList.map(todo => todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo)
     setTodoList(updatedTodoList)
-    console.log(updatedTodoList)
   }
 
   return (
@@ -49,7 +55,7 @@ function App() {
             <div className='todo-list' key={todo.id}>
               <div className='left'>
                 <label className='label'>
-                  <input className='checkbox' onChange={() => onTodoCheckChange(todo.id)} type='checkbox' />
+                  <input className='checkbox' onChange={() => onTodoCheckChange(todo.id)} type='checkbox' checked={todo.isCompleted} />
                   <span className={todo.isCompleted ? 'strike-through' : ''}>{todo.todo} </span>
                 </label>
               </div>
